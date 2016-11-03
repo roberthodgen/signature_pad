@@ -76,6 +76,8 @@ var SignaturePad = (function (document) {
         ctx.fillStyle = this.backgroundColor;
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         ctx.fillRect(0, 0, canvas.width, canvas.height);
+        this.paths = [];
+        this.points = [];
         this._reset();
     };
 
@@ -106,6 +108,7 @@ var SignaturePad = (function (document) {
 
     SignaturePad.prototype._strokeBegin = function (event) {
         this._reset();
+        this.paths.push(this.points);
         this._strokeUpdate(event);
         if (typeof this.onBegin === 'function') {
             this.onBegin(event);
@@ -190,7 +193,8 @@ var SignaturePad = (function (document) {
     SignaturePad.prototype._addPoint = function (point) {
         var points = this.points,
             c2, c3,
-            curve, tmp;
+            curve, tmp,
+            len;
 
         points.push(point);
 
@@ -199,16 +203,15 @@ var SignaturePad = (function (document) {
             // by copying the first point to the beginning.
             if (points.length === 3) points.unshift(points[0]);
 
-            tmp = this._calculateCurveControlPoints(points[0], points[1], points[2]);
-            c2 = tmp.c2;
-            tmp = this._calculateCurveControlPoints(points[1], points[2], points[3]);
-            c3 = tmp.c1;
-            curve = new Bezier(points[1], c2, c3, points[2]);
-            this._addCurve(curve);
+            // Only uses the last 4 points...
+            len = points.length;
 
-            // Remove the first element from the list,
-            // so that we always have no more than 4 points in points array.
-            points.shift();
+            tmp = this._calculateCurveControlPoints(points[len - 4], points[len - 3], points[len - 2]);
+            c2 = tmp.c2;
+            tmp = this._calculateCurveControlPoints(points[len - 3], points[len - 2], points[len - 1]);
+            c3 = tmp.c1;
+            curve = new Bezier(points[len - 3], c2, c3, points[len - 2]);
+            this._addCurve(curve);
         }
     };
 

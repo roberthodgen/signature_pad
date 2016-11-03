@@ -140,5 +140,17 @@ If you'd like to remove (trim) empty space around a signature, you can do it on 
 ### Drawing over an image
 Demo: https://jsfiddle.net/szimek/d6a78gwq/
 
+### Access raw point data
+
+If you'd like access to the underlying point data, use the `paths` property on SignaturePad instances, example:
+``` javascript
+var canvas = document.querySelector("canvas");
+
+var signaturePad = new SignaturePad(canvas);
+
+// Returns an array of paths, each path contains Point objects with `x`, `y`, and `time` properties.
+var doSomethingWithPaths = signaturePad.paths;
+```
+
 ## License
 Released under the [MIT License](http://www.opensource.org/licenses/MIT).
