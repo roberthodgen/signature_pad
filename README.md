@@ -27,6 +27,9 @@ var signaturePad = new SignaturePad(canvas);
 signaturePad.toDataURL(); // save image as PNG
 signaturePad.toDataURL("image/jpeg"); // save image as JPEG
 
+// Access underlying path and point data
+var paths = signaturePad.paths;
+
 // Draws signature image from data URL
 signaturePad.fromDataURL("data:image/png;base64,iVBORw0K...");
 
@@ -141,15 +144,14 @@ If you'd like to remove (trim) empty space around a signature, you can do it on 
 Demo: https://jsfiddle.net/szimek/d6a78gwq/
 
 ### Access raw point data
-
 If you'd like access to the underlying point data, use the `paths` property on SignaturePad instances, example:
 ``` javascript
 var canvas = document.querySelector("canvas");
 
 var signaturePad = new SignaturePad(canvas);
 
-// Returns an array of paths, each path contains Point objects with `x`, `y`, and `time` properties.
-var doSomethingWithPaths = signaturePad.paths;
+// Property for accessing path data, each path contains Point objects with `x`, `y`, and `time` properties.
+var paths = signaturePad.paths;
 ```
 
 ## License
