@@ -1,4 +1,7 @@
 ## Changelog
+### 1.6.0
+* Add `paths` property for access to all points and path data. [roberthodgen](https://github.com/roberthodgen)
+
 ### 1.5.3
 * Fix `touchend` event on touch devices. (#150) [mtomic](https://github.com/mtomic)
 * Fix handling touch events in Egde browser. (#134) [dideldum73](https://github.com/dideldum73)
